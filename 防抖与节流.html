@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn1">防抖</button>
+  <script>
+    let btn = document.getElementById('btn1')
+    let debounceFnc = debounce(fn, 1000)
+    btn.addEventListener('click', function () {
+      debounceFnc('111')
+    })
+    function fn (value) {
+      console.log(value);
+    }
+    // 防抖 点击第一次如果未过时间点击第二次则重新来
+    function debounce (callback, delay) {
+      let timer
+      return function (value) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          callback(value)
+        }, delay);
+      }
+    }
+  </script>
+</body>
+
+</html>

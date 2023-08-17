@@ -44,6 +44,18 @@
     // 深拷贝 即使是复杂数据类型 不会像之前那样指向同一个地址 而是自己另外开辟一个空间
     // (说明 拷贝之后的 不会影响 拷贝之前的 前提是复杂数据类型)
     console.log('---deep---');
+    let root = {
+      name: 'root'
+    }
+    let obj1 = {
+      name: 'obj1'
+    }
+    let obj2 = {
+      name: 'obj2'
+    }
+    root.child = obj1
+    obj1.child = obj2
+    obj2.child = root
     // function deepClone (source) {
     //   if (source === null || typeof source !== "object" || source instanceof Date || source instanceof RegExp) {
     //     return source
@@ -57,23 +69,43 @@
     //   }
     //   return target
     // }
-    deepClone = (obj, map = new WeakMap()) => {
-      if (obj === null || typeofobj !== "object" || obj instanceof Date || obj instanceof RegExp) return obj
+    let deepClone = (obj, map = new WeakMap()) => {
+      console.log(obj);
+      if (obj === null || typeof obj !== "object" || obj instanceof Date || obj instanceof RegExp) return obj
       if (map.get(obj)) return map.get(obj)
       if (obj instanceof Map) {
         let newObj = new Map()
         map.set(obj, newObj)
-        for (let entry of obj) {
+        for (let entry in obj) {
           newObj.set(entry[0], deepClone(entry[1], map))
         }
+        return newObj
+      } else if (obj instanceof Set) {
+        let newObj = new Set()
+        map.set(obj, newObj)
+        for (let val in obj) {
+          newObj.add(deepClone(val, map))
+        }
+        return newObj
+      } else if (obj instanceof Array) {
+        let newObj = []
+        map.set(obj, newObj)
+        for (let key in obj) {
+          newObj[key] = deepClone(obj[key], map)
+        }
+        return newObj
+      } else if (obj instanceof Object) {
+        let newObj = {}
+        map.set(obj, newObj)
+        console.log(obj);
+        for (let key in obj) {
+          newObj[key] = deepClone(obj[key], map)
+        }
+        return newObj
       }
     }
-    let deepPerson = deepClone(person)
-    console.log('deep', deepPerson);
-    deepPerson.name = '11'
-    deepPerson.hobby[0] = 'sing'
-    console.log(deepPerson == person);
-    console.log(person);
+    let rootCopy = deepClone(root)
+    console.log('项目深拷贝', rootCopy === rootCopy.child.child.child);
 
   </script>
 </body>
