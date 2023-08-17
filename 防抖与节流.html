@@ -10,10 +10,11 @@
 
 <body>
   <button id="btn1">防抖</button>
+  <button id="btn2">节流</button>
   <script>
-    let btn = document.getElementById('btn1')
+    let btn1 = document.getElementById('btn1')
     let debounceFnc = debounce(fn, 1000)
-    btn.addEventListener('click', function () {
+    btn1.addEventListener('click', function () {
       debounceFnc('111')
     })
     function fn (value) {
@@ -29,6 +30,23 @@
         }, delay);
       }
     }
+    // 节流
+    document.getElementById('btn2').onclick = throttle(handle, 2000)
+    function handle () {
+      console.log(Math.random());
+    }
+    function throttle (func, wait) {
+      let timerOut
+      return function () {
+        if (!timerOut) {
+          timerOut = setTimeout(() => {
+            func()
+            timerOut = null
+          }, wait);
+        }
+      }
+    }
+
   </script>
 </body>
 

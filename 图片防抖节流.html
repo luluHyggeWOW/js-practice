@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>111</h1>
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <img src=""
+    data-src="https://images.unsplash.com/photo-1682687220015-186f63b8850a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80">
+  <script>
+    let num = document.getElementsByTagName('img').length
+    let img = document.getElementsByTagName('img')
+    let n = 0 //储存图片加载到的位置 防止每次都从第一个加载
+    let isLoadImg = false //是否当前容器/页面里的图片加载完成
+
+    let _clienHeight = document.documentElement.clientHeight// 可见区域高度
+
+    let _scrollTop = document.documentElement.scrollTop || document.body.scrollTop //滚动条距离顶部的高度
+    // 监听变化重新计算可视区域
+    function computedClienHeight () {
+      _clienHeight = document.documentElement.clientHeight
+    }
+    // 页面载入完毕加载可视区域的图片
+    lazyload()
+    function lazyload () {
+      isLoadImg = n >= num
+      _scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      for (let i = n; i < num; i++) {
+        if (img[i].offsetTop < _clienHeight + _scrollTop) {
+          if (img[i].getAttribute('src') == '') {
+            img[i].src = img[i].getAttribute('data-src')
+          }
+          n = i + 1
+        }
+      }
+    }
+
+    /* 简单的防抖函数debounce * @param {*}* fun 要执行的函数 * wait 触发函数的时间间隔*/
+    function debounce (callback, delay) {
+      let timer
+      return function (arg) {
+        clearTimeout(itemr)
+        itemr = setTimeout(() => {
+          callback(arg)
+        }, delay);
+      }
+    }
+    /* 简单的节流函数*/
+    function throttle (fn, wait, flag) {
+      let timeOut
+      return function (arg) {
+        if (flag) return
+        if (!timeOut) {
+          timeOut = setTimeout(() => {
+            fn()
+            timeOut = null
+          }, wait);
+        }
+
+      }
+    }
+    //节流
+    window.addEventListener('scroll', throttle(lazyload, 100, isLoadImg))
+    //防抖
+    window.addEventListener('resize', debounce(computedClienHeight, 800))
+  </script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      /* width: 200px; */
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+      margin: 20px;
+
+    }
+  </style>
+</body>
+
+</html>
