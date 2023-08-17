@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //1 倒叙
+    let str = '123'
+    console.log(str.split('').reverse().join(''));
+    console.log([...str].reverse().join(''));
+    console.log(Array.from(str).reverse().join(''));
+    let res = []
+    for (let i = str.length; i > 0; i--) {
+      res.push(str[i - 1])
+    }
+    console.log(res.join(''));
+    // 转化成数组
+    // 字符串：将字符串转换为字符数组。
+    // const str = "Hello";
+    // const arr = [...str]; // ['H', 'e', 'l', 'l', 'o']
+    // 数组：将数组复制为新的数组。
+    // const arr1 = [1, 2, 3];
+    // const arr2 = [...arr1]; // [1, 2, 3]
+    // Set：将Set转换为数组。
+    // const set = new Set([1, 2, 3]);
+    // const arr = [...set]; // [1, 2, 3]
+    // Map：将Map的键或值转换为数组。
+    // const map = new Map([[1, 'one'], [2, 'two'], [3, 'three']]);
+    // const keys = [...map.keys()]; // [1, 2, 3]
+    // const values = [...map.values()]; // ['one', 'two', 'three']
+
+    //2 找出任意html中所有不重复的html标签
+    [...document.querySelectorAll('*')]
+    console.log([...new Set([...document.querySelectorAll('*')].map(v => v.tagName))]);
+    console.log([...new Set(Array.prototype.slice.call(document.querySelectorAll('*')).map(v => v.tagName))])
+
+    //手写map
+    let arr = [1, 2, 3]
+    console.log(arr.map(v => v + 1));
+    Array.prototype._map = function (fn) {
+      let newArr = []
+      for (let i = 0; i < this.length; i++) {
+        newArr.push(fn(this[i], i))
+      }
+      return newArr
+    }
+    console.log(arr._map(v => v + 1));
+    Array.prototype._filter = function (fn) {
+      let newArr = []
+      for (let i = 0; i < this.length; i++) {
+        if (fn(this[i])) {
+          newArr.push(this[i])
+        }
+      }
+      return newArr
+    }
+    console.log(arr._filter(v => v == 1));
+  </script>
+</body>
+
+</html>

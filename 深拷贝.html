@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let person = {
+      name: '找我',
+      hobby: ['run'],
+      fn: function () { },
+      date: new Date(),
+      reg: new RegExp('\\w+')
+    }
+    let person1 = person
+    person.name = '22'
+    console.log(person1 == person);
+    console.log(person1.name);
+    // 这个是浅拷贝吗 ?
+
+    // 浅拷贝的一个定义
+    //创建一个新的对象有一个新的地址 属性是基本数据类型 如果是复杂数据类型 就是赋值拷贝的就是地址
+    //(说明 拷贝之后的 会影响 拷贝之前的 前提是复杂数据类型)
+    // 赋值
+    function shallowClone (source) {
+      // 优化
+      let target = Array.isArray(source) ? [] : {}
+      for (let i in source) {
+        target[i] = source[i]
+      }
+      return target
+    }
+    console.log('---shallow---');
+    let shallowPerson = shallowClone(person)
+    shallowPerson.name = '11'
+    shallowPerson.hobby[0] = 'sing'
+    console.log(shallowPerson == person);
+    console.log(person);
+    // 深拷贝 即使是复杂数据类型 不会像之前那样指向同一个地址 而是自己另外开辟一个空间
+    // (说明 拷贝之后的 不会影响 拷贝之前的 前提是复杂数据类型)
+    console.log('---deep---');
+    // function deepClone (source) {
+    //   if (source === null || typeof source !== "object" || source instanceof Date || source instanceof RegExp) {
+    //     return source
+    //   }
+    //   // if (typeof source !== "object") return source
+    //   // 优化
+    //   let target = Array.isArray(source) ? [] : {}
+    //   for (let i in source) {
+    //     if (source.hasOwnProperty(i))
+    //       target[i] = deepClone(source[i])
+    //   }
+    //   return target
+    // }
+    deepClone = (obj, map = new WeakMap()) => {
+      if (obj === null || typeofobj !== "object" || obj instanceof Date || obj instanceof RegExp) return obj
+      if (map.get(obj)) return map.get(obj)
+      if (obj instanceof Map) {
+        let newObj = new Map()
+        map.set(obj, newObj)
+        for (let entry of obj) {
+          newObj.set(entry[0], deepClone(entry[1], map))
+        }
+      }
+    }
+    let deepPerson = deepClone(person)
+    console.log('deep', deepPerson);
+    deepPerson.name = '11'
+    deepPerson.hobby[0] = 'sing'
+    console.log(deepPerson == person);
+    console.log(person);
+
+  </script>
+</body>
+
+</html>

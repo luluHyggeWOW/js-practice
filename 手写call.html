@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let person = {
+      getName: function () {
+        console.log(this.name);
+      }
+    }
+    let man = {
+      name: '找我'
+    }
+    // console.log(person.getName.call(man));
+    Function.prototype.myCall = function (context) {
+      if (typeof this !== 'function') {
+        throw new Error('this is not a function')
+      }
+      // 形参不一会传
+      context = context || window
+      // 取参数
+      let agres = [...arguments].slice(1)
+      context.fn = this
+      let res = context.fn(agres)
+      delete context.fn
+      return res
+    }
+    console.log(111, person.getName.myCall(man));
+  </script>
+</body>
+
+</html>
