@@ -32,7 +32,7 @@
       delete context.fn
       return res
     }
-    console.log(111, person.getName.myCall(man, 1, 2, 3));
+    console.log('call', person.getName.myCall(man, 1, 2, 3));
     // 伪数组转化为数组
     // es6
     // [...arguments]
@@ -58,6 +58,7 @@
       delete context.fn
       return res
     }
+    console.log('apply', person.getName.myCall(man, [1, 2, 3]));
   </script>
 </body>
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //     promise async await的异步操作的时候会加入到微任务中去 会在调用栈清空的时候立即执行
+    // 调用栈中加入的微任务会立马执行
+    let p = new Promise(resolve => {
+      console.log(4);
+      resolve(5)
+    })
+    function f1 () {
+      console.log(1);
+    }
+    function f2 () {
+      setTimeout(() => {
+        console.log(2);
+      }, 0);
+      f1()
+      console.log(3);
+      p.then(resolve => {
+        console.log(resolve);
+      })
+    }
+    f2()
+  </script>
+</body>
+
+</html>
