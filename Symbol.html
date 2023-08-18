@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // string number undefined null Boolean Symbol
+    let mySymbol = Symbol()
+
+    let a = {}
+    a[mySymbol] = 'hello'
+
+    let b = {
+      [mySymbol]: 'hello'
+    }
+    let c = {}
+    Object.defineProperty(c, mySymbol, { value: 'hello' })
+    console.log(a, b, c);
+    let person = {
+      name: 'name',
+      age: 'age',
+      [Symbol('level')]: 'A' //打印不出来
+    }
+    for (let i in person) {
+      console.log(i);
+    }
+    //: person is not iterable 不具备Symbol.iterator
+    // for (let i of person) {
+    //   console.log(i);
+    // }
+    console.log(Object.keys(person));
+    console.log(Object.getOwnPropertySymbols(person));
+
+    console.log(Reflect.ownKeys(person));
+    let s1 = Symbol.for('foo')
+    let s2 = Symbol.for('foo')
+    console.log(s1 === s2);
+    Symbol.keyFor(s1) //foo
+    Symbol.keyFor(s2) //foo
+
+    let game = {
+      a: Symbol('aa'),
+      b: Symbol('bb'),
+      c: Symbol('cc'),
+    }
+    function createRole (type) {
+      if (type == game.a) {
+        console.log('aa');
+      } else if (type == game.b) {
+        console.log('bb');
+      } else if (type == game.c) {
+        console.log('cc');
+      }
+    }
+    createRole(game.a)
+  </script>
+</body>
+
+</html>
