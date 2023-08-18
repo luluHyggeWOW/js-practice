@@ -9,28 +9,37 @@
 </head>
 
 <body>
+  <div class="f">
+    <div class="s"></div>
+    <!-- <div class="s"></div>
+    <div class="s"></div> -->
+  </div>
   <script>
-    //     promise async await的异步操作的时候会加入到微任务中去 会在调用栈清空的时候立即执行
-    // 调用栈中加入的微任务会立马执行
-    let p = new Promise(resolve => {
-      console.log(4);
-      resolve(5)
-    })
-    function f1 () {
-      console.log(1);
-    }
-    function f2 () {
-      setTimeout(() => {
-        console.log(2);
-      }, 0);
-      f1()
-      console.log(3);
-      p.then(resolve => {
-        console.log(resolve);
-      })
-    }
-    f2()
+
   </script>
+  <style>
+    /* 块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level BOX参与，该区域拥有
+    一套渲染规则来约束块级盒子的布局，且与区域外部无关。 */
+
+    /* 四种  overflow: hidden最好*/
+    /* 解决margin塌陷 阻止浮动元素覆盖 */
+    .f {
+      /* float: left; */
+      /* position: absolute; */
+      /* display: inline-block; */
+      /* overflow: hidden; */
+      background-color: aquamarine;
+
+    }
+
+    .s {
+      width: 300px;
+      height: 300px;
+      background-color: aqua;
+      float: left;
+      margin-top: 20px
+    }
+  </style>
 </body>
 
 </html>
