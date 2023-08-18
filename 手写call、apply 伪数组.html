@@ -32,7 +32,32 @@
       delete context.fn
       return res
     }
-    console.log(111, person.getName.myCall(man));
+    console.log(111, person.getName.myCall(man, 1, 2, 3));
+    // 伪数组转化为数组
+    // es6
+    // [...arguments]
+    // es5
+    // Array.prototype.slice.call(arguments)
+    // call运用
+    // 1 判断复杂类型
+    // Object.prototype.toString.call({})
+    // 2 伪数组转化数组
+    // Array.prototype.slice.call(arguments)
+    //3 实现继承
+    // a.call() 
+    Function.prototype.myApply = function (context) {
+      if (typeof this !== 'function') {
+        throw new Error('this is not a function')
+      }
+      // 形参不一会传
+      context = context || window
+      // 取参数
+      let res;
+      context.fn = this
+      arguments[1] ? res = context.fn([...arguments[1]]) : res = context.fn()
+      delete context.fn
+      return res
+    }
   </script>
 </body>
 

@@ -43,6 +43,24 @@
     b.say(a.say) //fnc.call(window) X
     b.say = a.say
     b.say() //b.say.call(b) B
+    var x = 11
+    let obj = {
+      x: 22,
+      say: () => {
+        console.log(this.x);
+      }
+    }
+    obj.say()
+    var obj1 = {
+      birth: 1990,
+      getAge: function () {
+        var b = this.birth; // 1990
+        var fn = () => new Date().getFullYear() - this.birth; // this指obj对象return fn(); 
+        console.log(fn());
+      }
+    }
+
+    obj1.getAge();  // 33 2023-1990 
   </script>
 </body>
 
